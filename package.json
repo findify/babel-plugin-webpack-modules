@@ -1,0 +1,23 @@
+{
+  "name": "@findify/babel-plugin-webpack-modules",
+  "version": "0.0.1",
+  "description": "Plugin converts require/exports to webpack format",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Findify",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/findify/babel-plugin-webpack-modules.git"
+  },
+  "keywords": [
+    "babel",
+    "webpack"
+  ],
+  "bugs": {
+    "url": "https://github.com/findify/babel-plugin-webpack-modules/issues"
+  },
+  "homepage": "https://github.com/findify/babel-plugin-webpack-modules#readme"
+}
