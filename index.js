@@ -21,7 +21,7 @@ const templates = (t) => ({
   ImportDefaultSpecifier: t(`var VARIABLE = NAMESPACE.default;`),
   ImportNamespaceSpecifier: t(`var VARIABLE = NAMESPACE;`),
   ImportSpecifier: t(`var VARIABLE = NAMESPACE.NAME;`),
-  ExportNamedDeclaration: t(`${EXPORTS}.NAME = BODY;`),
+  ExportNamedDeclaration: t(`${EXPORTS}[NAME] = BODY;`),
   ExportDefaultDeclaration: t(`${EXPORTS}.default = BODY;`),
   imports: t(`var NAMESPACE = __imp(HASH, PATH);`),
   module: t(`
