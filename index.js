@@ -6,24 +6,28 @@ const REQUIRE = 'r';
 const defaultModuleHash = path => path;
 const defaultExclude = ['types'];
 
+const INTEROP = `
+function _interop(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+`
 const SAFE_IMPORT = `
 function __imp(p, n){
-  try{return ${REQUIRE}(p)}
+  try{return _interop(${REQUIRE}(p)) }
   catch(e){
     console.error('[Devtools]: Module "' + n + '" was not found!');
   }
 }`;
 
 const templates = (t) => ({
-  ImportDefaultSpecifier: t(`var VARIABLE = ${REQUIRE}.n(NAMESPACE)['a'];`),
+  ImportDefaultSpecifier: t(`var VARIABLE = NAMESPACE.default;`),
   ImportNamespaceSpecifier: t(`var VARIABLE = NAMESPACE;`),
-  ImportSpecifier: t(`var VARIABLE = NAMESPACE[NAME];`),
-  ExportNamedDeclaration: t(`${REQUIRE}.d(${EXPORTS}, NAME, function() { return BODY; });`),
-  ExportDefaultDeclaration: t(`${REQUIRE}.d(${EXPORTS}, "default", function() { return BODY; });`),
+  ImportSpecifier: t(`var VARIABLE = NAMESPACE.NAME;`),
+  ExportNamedDeclaration: t(`${EXPORTS}.NAME = BODY;`),
+  ExportDefaultDeclaration: t(`${EXPORTS}.default = BODY;`),
   imports: t(`var NAMESPACE = __imp(HASH, PATH);`),
   module: t(`
     (function(${MODULE},${EXPORTS},${REQUIRE}){
-      ${REQUIRE}.r(${EXPORTS});
+      Object.defineProperty(${EXPORTS}, "__esModule", { value: true });
+      ${INTEROP}
       ${SAFE_IMPORT}
       IMPORTS
       BODY
