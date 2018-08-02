@@ -1,6 +1,6 @@
 {
   "name": "@findify/babel-plugin-webpack-modules",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Plugin converts require/exports to webpack format",
   "main": "index.js",
   "scripts": {
