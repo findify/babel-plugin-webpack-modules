@@ -21,7 +21,7 @@ const templates = (t) => ({
   ImportDefaultSpecifier: t(`var VARIABLE = NAMESPACE.default;`),
   ImportNamespaceSpecifier: t(`var VARIABLE = NAMESPACE;`),
   ImportSpecifier: t(`var VARIABLE = NAMESPACE[NAME];`),
-  ExportNamedDeclaration: t(`${EXPORTS}[NAME] = BODY;`),
+  ExportNamedDeclaration: t(`var VARIABLE = ${EXPORTS}[NAME] = BODY;`),
   ExportDefaultDeclaration: t(`${EXPORTS}.default = BODY;`),
   imports: t(`var NAMESPACE = __imp(HASH, PATH);`),
   module: t(`
@@ -100,6 +100,7 @@ module.exports = ({ types: t, template }) => {
         const props = node.type === 'ExportDefaultDeclaration'
           ? { BODY: node.declaration }
           : {
+            VARIABLE: t.identifier(node.declaration.declarations[0].id.name),
             NAME: t.stringLiteral(node.declaration.declarations[0].id.name),
             BODY: node.declaration.declarations[0].init
           }
